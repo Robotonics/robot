@@ -28,30 +28,25 @@ namespace robotapp
             Unloaded += MainPage_Unloaded;
             ultrasonic = new Sr04UltrasonicDistanceSensor(triggerPinNumber: 12, echoPinNumber: 16);
             ultrasonic.DistanceChanged += ultrasonic_DistanceChanged;
-            
-            
-            
-            
+            sonar();
+           
         }
-
-        private  void sonar()
+         private void sonar()
         {
             sonardata.Text = dist.ToString();
-
         }
-
+        
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
 
         {
+            
+
             if (ultrasonic != null)
 
             {
-               
-                ultrasonic.DistanceChanged -= ultrasonic_DistanceChanged;
-                 ultrasonic.Dispose();
-                sonar();
-               
+              ultrasonic.DistanceChanged -= ultrasonic_DistanceChanged;
+              ultrasonic.Dispose();                               
             }
         }
 
@@ -59,8 +54,8 @@ namespace robotapp
 
         {
             dist = ultrasonic.CurrentDistance;
-                             
 
+           
         }
 
         
