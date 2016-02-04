@@ -18,6 +18,7 @@ namespace robotapp
 {
     public sealed partial class MainPage : Page
     {
+        
         private Sr04UltrasonicDistanceSensor ultrasonic;
         public object dist { get; private set; }
 
@@ -25,39 +26,25 @@ namespace robotapp
 
         {
             this.InitializeComponent();
-            Unloaded += MainPage_Unloaded;
-            ultrasonic = new Sr04UltrasonicDistanceSensor(triggerPinNumber: 12, echoPinNumber: 16);
-            ultrasonic.DistanceChanged += ultrasonic_DistanceChanged;
-            sonar();
-           
+            ultrasonic = new Sr04UltrasonicDistanceSensor(triggerPinNumber: 12, echoPinNumber: 16);          
+            ultrasonic.DistanceChanged += ultrasonic_DistanceChanged;   // event handler =  ultrasonic.DistanceChanged                      
         }
-         private void sonar()
+
+
+        private void startsonar_Click ( object  sender, RoutedEventArgs e)
         {
+
             sonardata.Text = dist.ToString();
         }
-        
 
-        private void MainPage_Unloaded(object sender, RoutedEventArgs e)
+    
 
-        {
-            
-
-            if (ultrasonic != null)
-
-            {
-              ultrasonic.DistanceChanged -= ultrasonic_DistanceChanged;
-              ultrasonic.Dispose();                               
-            }
-        }
-
-        private void ultrasonic_DistanceChanged(object sender, EventArgs e)
+        private void ultrasonic_DistanceChanged(object sender, EventArgs e) // event handler registered...
 
         {
-            dist = ultrasonic.CurrentDistance;
-
-           
+           // ultrasonic.DistanceChanged -= ultrasonic_DistanceChanged; // this switches eventhandler off
+            dist = ultrasonic.GetDistance(); 
         }
-
         
     }
 
